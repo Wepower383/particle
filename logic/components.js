@@ -1,0 +1,1 @@
+// Logic for electronic components (resistor, capacitor, etc.)
