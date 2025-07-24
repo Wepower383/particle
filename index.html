@@ -2,18 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Particle Simulator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Intro screen -->
   <div id="intro">
     <h1>Welcome to the simulator where the unseen can be seen</h1>
     <button onclick="enterSimulation()">Enter</button>
   </div>
-  <div id="simulator" style="display:none;">
-    <!-- Simulation Interface Will Render Here -->
+
+  <!-- Main simulator panel -->
+  <div id="simulator" style="display: none;">
+    <h2>Particle Simulator Panel</h2>
+    <p>This is where your tools and components will appear.</p>
+    <button onclick="alert('Simulating energy flow...')">Run Simulation</button>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>
