@@ -2,47 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Particle Simulator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="intro">
-    <h1>Welcome to the simulator where the unseen can be seen</h1>
-    <button onclick="enterSimulation()">Enter</button>
+  <h1>Particle Simulator Panel</h1>
+  <div id="controls">
+    <button onclick="addBattery()">Add Battery</button>
+    <button onclick="addResistor()">Add Resistor</button>
+    <button onclick="addCoil()">Add Coil</button>
+    <button onclick="resetSimulator()">Reset</button>
   </div>
-
-  <div id="simulator" style="display:none;">
-    <div id="leftPanel">
-      <h2>Particle Simulator Panel</h2>
-      <div class="controls">
-        <button onclick="addComponent('battery')">Add Battery</button>
-        <button onclick="addComponent('resistor')">Add Resistor</button>
-        <button onclick="addComponent('coil')">Add Coil</button>
-        <button onclick="resetSimulator()">Reset</button>
-      </div>
-
-      <div id="circuitArea"></div>
-
-      <div class="readouts">
-        <p><strong>Voltage:</strong> <span id="voltage">5</span> V</p>
-        <p><strong>Resistance:</strong> <span id="resistance">0</span> Ω</p>
-        <p><strong>Current:</strong> <span id="current">0</span> A</p>
-      </div>
-    </div>
-
-    <div id="rightPanel">
-      <div id="harmonyTree">
-        <h3>Harmony Tree</h3>
-        <div id="treeVisual">🌱</div>
-      </div>
-      <div id="companion">
-        <h3>Companion AI</h3>
-        <p id="companionMessage">Build something and I’ll guide you.</p>
-      </div>
-    </div>
+  <div id="circuit"></div>
+  <div id="readout">
+    <p id="voltage">Voltage: 0 V</p>
+    <p id="resistance">Resistance: 0 Ω</p>
+    <p id="current">Current: 0 A</p>
   </div>
-
+  <div id="harmony">
+    <h3>Harmony Tree 🌐</h3>
+    <p><strong>Companion AI:</strong> Looking good. Keep experimenting!</p>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
