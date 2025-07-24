@@ -1,25 +1,64 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Particle Simulator</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #111;
+      color: #f0f0f0;
+    }
+
+    #simulator {
+      display: none;
+      margin-top: 40px;
+      padding: 20px;
+      border: 2px solid #444;
+      border-radius: 12px;
+      background-color: #222;
+    }
+
+    button {
+      background-color: #00ffc8;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #00cc9f;
+    }
+  </style>
 </head>
 <body>
+
   <!-- Intro screen -->
   <div id="intro">
     <h1>Welcome to the simulator where the unseen can be seen</h1>
     <button onclick="enterSimulation()">Enter</button>
   </div>
 
-  <!-- Main simulator panel -->
-  <div id="simulator" style="display: none;">
+  <!-- Simulator panel -->
+  <div id="simulator">
     <h2>Particle Simulator Panel</h2>
     <p>This is where your tools and components will appear.</p>
     <button onclick="alert('Simulating energy flow...')">Run Simulation</button>
   </div>
 
-  <script src="app.js"></script>
+  <!-- Script is now inside the HTML file -->
+  <script>
+    function enterSimulation() {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("simulator").style.display = "block";
+    }
+  </script>
+
 </body>
 </html>
