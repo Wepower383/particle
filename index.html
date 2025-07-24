@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Particle Simulator</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Particle Simulator Panel</h1>
   <div id="controls">
-    <button onclick="addBattery()">Add Battery</button>
-    <button onclick="addResistor()">Add Resistor</button>
-    <button onclick="addCoil()">Add Coil</button>
+    <button onclick="addComponent('battery')">Add Battery</button>
+    <button onclick="addComponent('resistor')">Add Resistor</button>
+    <button onclick="addComponent('coil')">Add Coil</button>
+    <button onclick="addComponent('capacitor')">Add Capacitor</button>
+    <button onclick="addComponent('diode')">Add Diode</button>
     <button onclick="resetSimulator()">Reset</button>
   </div>
-  <div id="circuit"></div>
-  <div id="readout">
-    <p id="voltage">Voltage: 0 V</p>
-    <p id="resistance">Resistance: 0 Ω</p>
-    <p id="current">Current: 0 A</p>
-  </div>
-  <div id="harmony">
-    <h3>Harmony Tree 🌐</h3>
-    <p><strong>Companion AI:</strong> Looking good. Keep experimenting!</p>
+  <canvas id="simulatorCanvas" width="900" height="500"></canvas>
+  <div id="infoPanel">
+    <p><strong>Voltage:</strong> <span id="voltage">0</span> V</p>
+    <p><strong>Resistance:</strong> <span id="resistance">0</span> Ω</p>
+    <p><strong>Current:</strong> <span id="current">0</span> A</p>
   </div>
   <script src="app.js"></script>
 </body>
