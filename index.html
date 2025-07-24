@@ -1,61 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Particle Simulator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      background-color: #111;
-      color: #f0f0f0;
-      font-family: monospace;
-      text-align: center;
-      padding: 60px 20px;
-    }
-
-    #simulator {
-      display: none;
-      padding: 20px;
-      margin-top: 40px;
-      background-color: #222;
-      border-radius: 8px;
-      border: 1px solid #444;
-    }
-
-    button {
-      padding: 12px 24px;
-      font-size: 18px;
-      border: none;
-      border-radius: 6px;
-      background-color: #00ffc8;
-      color: #000;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #00d1a6;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <div id="intro">
     <h1>Welcome to the simulator where the unseen can be seen</h1>
     <button onclick="enterSimulation()">Enter</button>
   </div>
 
-  <div id="simulator">
+  <div id="simulator" style="display: none;">
     <h2>Particle Simulator Panel</h2>
-    <p>The simulator has loaded successfully.</p>
-    <button onclick="alert('Simulating...')">Run Simulation</button>
+    <div class="controls">
+      <button onclick="addComponent('battery')">Add Battery</button>
+      <button onclick="addComponent('resistor')">Add Resistor</button>
+      <button onclick="addComponent('coil')">Add Coil</button>
+      <button onclick="resetSimulator()">Reset</button>
+    </div>
+    <div id="workspace"></div>
+    <div class="output">
+      <p><strong>Voltage:</strong> <span id="voltage">0</span> V</p>
+      <p><strong>Resistance:</strong> <span id="resistance">0</span> Ω</p>
+      <p><strong>Current:</strong> <span id="current">0</span> A</p>
+    </div>
   </div>
 
-  <script>
-    function enterSimulation() {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("simulator").style.display = "block";
-    }
-  </script>
-
+  <script src="app.js"></script>
 </body>
 </html>
