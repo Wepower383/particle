@@ -1,96 +1,52 @@
 body {
-  font-family: 'Courier New', monospace;
-  background: #111;
-  color: #fff;
-  margin: 0;
-  padding: 0;
+  background-color: #111;
+  color: #eee;
+  font-family: monospace;
+  padding: 20px;
+  text-align: center;
 }
 
-#intro {
-  text-align: center;
-  padding: 60px 20px;
+#controls {
+  margin-bottom: 20px;
 }
 
 button {
-  margin: 0.5em;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  background-color: #1fe4b6;
+  background-color: #22cc88;
+  color: #000;
+  padding: 10px;
+  margin: 5px;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-weight: bold;
 }
 
-button:hover {
-  background-color: #0bd4a2;
-}
-
-#simulator {
+#circuit {
   display: flex;
-}
-
-#leftPanel {
-  flex: 2;
-  padding: 20px;
-}
-
-#rightPanel {
-  flex: 1;
-  background: #222;
-  padding: 20px;
-  border-left: 1px solid #444;
-}
-
-#circuitArea {
-  margin-top: 1.5em;
-  min-height: 300px;
-  border: 1px dashed #555;
-  padding: 1em;
-  position: relative;
-  background-color: #1a1a1a;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .component {
-  padding: 0.5em 1em;
-  background: #333;
-  border: 1px solid #0bd4a2;
-  border-radius: 4px;
-  position: absolute;
-  cursor: move;
-  user-select: none;
-}
-
-.component:hover::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  top: -25px;
-  left: 0;
-  background: #444;
-  color: #fff;
-  padding: 0.3em 0.6em;
-  border-radius: 4px;
-  font-size: 0.8em;
-  white-space: nowrap;
-}
-
-.readouts {
-  margin-top: 2em;
-  font-size: 1.1em;
-}
-
-#harmonyTree {
-  margin-bottom: 2em;
-}
-
-#treeVisual {
-  font-size: 2em;
-  margin-top: 10px;
-}
-
-#companion {
-  font-size: 0.9em;
-  background: #1d1d1d;
+  border: 2px solid #ccc;
   padding: 10px;
-  border-radius: 6px;
+  background-color: #222;
+  width: 120px;
+  text-align: center;
+}
+
+input {
+  width: 60px;
+  margin-top: 5px;
+}
+
+#readout {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+#harmony {
+  margin-top: 30px;
+  color: #66f2ff;
 }
