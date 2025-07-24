@@ -1,59 +1,65 @@
 let components = [];
 
-function addBattery() {
-  const voltage = prompt("Enter battery voltage (V):", "5");
-  if (!voltage) return;
-  components.push({ type: 'battery', voltage: parseFloat(voltage) });
-  renderCircuit();
-}
-
-function addResistor() {
-  const ohms = prompt("Enter resistor resistance (Ω):", "10");
-  if (!ohms) return;
-  components.push({ type: 'resistor', resistance: parseFloat(ohms) });
-  renderCircuit();
-}
-
-function addCoil() {
-  const turns = prompt("Enter coil turns (acts like resistance Ω):", "5");
-  if (!turns) return;
-  components.push({ type: 'coil', resistance: parseFloat(turns) });
-  renderCircuit();
+function addComponent(type) {
+  const value = prompt(`Enter value for ${type.toUpperCase()}:`, "10");
+  components.push({ type, value: parseFloat(value), x: 100 + components.length * 100, y: 250 });
+  updateCanvas();
+  updateStats();
 }
 
 function resetSimulator() {
   components = [];
-  renderCircuit();
+  updateCanvas();
+  updateStats();
 }
 
-function renderCircuit() {
-  const circuitDiv = document.getElementById("circuit");
-  circuitDiv.innerHTML = '';
-
-  let voltage = 0;
-  let totalResistance = 0;
+function updateCanvas() {
+  const canvas = document.getElementById("simulatorCanvas");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   components.forEach((comp, index) => {
-    const box = document.createElement("div");
-    box.className = "component";
+    ctx.fillStyle = getColor(comp.type);
+    ctx.fillRect(comp.x - 30, comp.y - 20, 60, 40);
+    ctx.strokeStyle = "#fff";
+    ctx.strokeRect(comp.x - 30, comp.y - 20, 60, 40);
+    ctx.fillStyle = "#fff";
+    ctx.fillText(`${capitalize(comp.type)} (${comp.value})`, comp.x - 28, comp.y + 5);
 
-    if (comp.type === 'battery') {
-      voltage += comp.voltage;
-      box.innerHTML = `🔋 Battery (${comp.voltage}V)`;
-    } else if (comp.type === 'resistor') {
-      totalResistance += comp.resistance;
-      box.innerHTML = `🔵 Resistor (${comp.resistance}Ω)`;
-    } else if (comp.type === 'coil') {
-      totalResistance += comp.resistance;
-      box.innerHTML = `🔴 Coil (${comp.resistance}Ω)`;
+    // Draw wires (basic chaining logic)
+    if (index > 0) {
+      const prev = components[index - 1];
+      ctx.beginPath();
+      ctx.moveTo(prev.x + 30, prev.y);
+      ctx.lineTo(comp.x - 30, comp.y);
+      ctx.stroke();
     }
-
-    circuitDiv.appendChild(box);
   });
+}
 
-  const current = totalResistance > 0 ? (voltage / totalResistance).toFixed(2) : 0;
+function updateStats() {
+  const voltage = components.filter(c => c.type === "battery")
+    .reduce((sum, c) => sum + c.value, 0);
+  const resistance = components.filter(c => c.type === "resistor")
+    .reduce((sum, c) => sum + c.value, 0);
+  const current = resistance > 0 ? (voltage / resistance).toFixed(2) : 0;
 
-  document.getElementById("voltage").textContent = `Voltage: ${voltage} V`;
-  document.getElementById("resistance").textContent = `Resistance: ${totalResistance} Ω`;
-  document.getElementById("current").textContent = `Current: ${current} A`;
+  document.getElementById("voltage").textContent = voltage;
+  document.getElementById("resistance").textContent = resistance;
+  document.getElementById("current").textContent = current;
+}
+
+function getColor(type) {
+  switch (type) {
+    case "battery": return "#2ecc71";
+    case "resistor": return "#3498db";
+    case "coil": return "#e74c3c";
+    case "capacitor": return "#f39c12";
+    case "diode": return "#9b59b6";
+    default: return "#fff";
+  }
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
