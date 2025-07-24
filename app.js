@@ -1,103 +1,59 @@
-function enterSimulation() {
-  document.getElementById("intro").style.display = "none";
-  document.getElementById("simulator").style.display = "flex";
+let components = [];
+
+function addBattery() {
+  const voltage = prompt("Enter battery voltage (V):", "5");
+  if (!voltage) return;
+  components.push({ type: 'battery', voltage: parseFloat(voltage) });
+  renderCircuit();
 }
 
-let resistance = 0;
-const voltage = 5;
-let componentCount = 0;
-
-function addComponent(type) {
-  const area = document.getElementById("circuitArea");
-  const div = document.createElement("div");
-  div.classList.add("component");
-  div.setAttribute("draggable", true);
-  div.setAttribute("data-tooltip", type.charAt(0).toUpperCase() + type.slice(1));
-  div.innerText = 
-    type === 'battery' ? "🔋 Battery (+5V)" : 
-    type === 'resistor' ? "🌀 Resistor (10Ω)" : 
-    "🧲 Coil (5Ω)";
-
-  div.style.left = `${50 + Math.random() * 300}px`;
-  div.style.top = `${50 + Math.random() * 100}px`;
-
-  div.ondblclick = () => {
-    area.removeChild(div);
-    if (type === 'resistor') resistance -= 10;
-    if (type === 'coil') resistance -= 5;
-    componentCount--;
-    updateReadings();
-    updateTree();
-    updateCompanion();
-  };
-
-  div.onmousedown = dragMouseDown;
-  area.appendChild(div);
-
-  if (type === 'resistor') resistance += 10;
-  if (type === 'coil') resistance += 5;
-  componentCount++;
-  updateReadings();
-  updateTree();
-  updateCompanion();
+function addResistor() {
+  const ohms = prompt("Enter resistor resistance (Ω):", "10");
+  if (!ohms) return;
+  components.push({ type: 'resistor', resistance: parseFloat(ohms) });
+  renderCircuit();
 }
 
-function updateReadings() {
-  const current = resistance > 0 ? (voltage / resistance).toFixed(2) : 0;
-  document.getElementById("voltage").innerText = voltage;
-  document.getElementById("resistance").innerText = resistance;
-  document.getElementById("current").innerText = current;
+function addCoil() {
+  const turns = prompt("Enter coil turns (acts like resistance Ω):", "5");
+  if (!turns) return;
+  components.push({ type: 'coil', resistance: parseFloat(turns) });
+  renderCircuit();
 }
 
 function resetSimulator() {
-  document.getElementById("circuitArea").innerHTML = "";
-  resistance = 0;
-  componentCount = 0;
-  updateReadings();
-  updateTree();
-  updateCompanion();
+  components = [];
+  renderCircuit();
 }
 
-function updateTree() {
-  const visual = document.getElementById("treeVisual");
-  const symbols = ["🌱", "🌿", "🌳", "🌲", "🌀"];
-  visual.innerText = symbols[Math.min(componentCount, symbols.length - 1)];
-}
+function renderCircuit() {
+  const circuitDiv = document.getElementById("circuit");
+  circuitDiv.innerHTML = '';
 
-function updateCompanion() {
-  const message = document.getElementById("companionMessage");
-  if (componentCount === 0) {
-    message.innerText = "Build something and I’ll guide you.";
-  } else if (componentCount < 3) {
-    message.innerText = "Try combining resistors and coils to balance the circuit.";
-  } else if (resistance > 30) {
-    message.innerText = "You may want to reduce resistance to increase current.";
-  } else {
-    message.innerText = "Looking good. Keep experimenting!";
-  }
-}
+  let voltage = 0;
+  let totalResistance = 0;
 
-function dragMouseDown(e) {
-  e.preventDefault();
-  const elmnt = e.target;
-  let pos3 = e.clientX;
-  let pos4 = e.clientY;
+  components.forEach((comp, index) => {
+    const box = document.createElement("div");
+    box.className = "component";
 
-  function elementDrag(e) {
-    e.preventDefault();
-    const pos1 = pos3 - e.clientX;
-    const pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
+    if (comp.type === 'battery') {
+      voltage += comp.voltage;
+      box.innerHTML = `🔋 Battery (${comp.voltage}V)`;
+    } else if (comp.type === 'resistor') {
+      totalResistance += comp.resistance;
+      box.innerHTML = `🔵 Resistor (${comp.resistance}Ω)`;
+    } else if (comp.type === 'coil') {
+      totalResistance += comp.resistance;
+      box.innerHTML = `🔴 Coil (${comp.resistance}Ω)`;
+    }
 
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
+    circuitDiv.appendChild(box);
+  });
 
-  document.onmouseup = closeDragElement;
-  document.onmousemove = elementDrag;
+  const current = totalResistance > 0 ? (voltage / totalResistance).toFixed(2) : 0;
+
+  document.getElementById("voltage").textContent = `Voltage: ${voltage} V`;
+  document.getElementById("resistance").textContent = `Resistance: ${totalResistance} Ω`;
+  document.getElementById("current").textContent = `Current: ${current} A`;
 }
