@@ -2,8 +2,13 @@ body {
   font-family: 'Courier New', monospace;
   background: #111;
   color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+#intro {
   text-align: center;
-  padding: 2em;
+  padding: 60px 20px;
 }
 
 button {
@@ -21,17 +26,34 @@ button:hover {
   background-color: #0bd4a2;
 }
 
+#simulator {
+  display: flex;
+}
+
+#leftPanel {
+  flex: 2;
+  padding: 20px;
+}
+
+#rightPanel {
+  flex: 1;
+  background: #222;
+  padding: 20px;
+  border-left: 1px solid #444;
+}
+
 #circuitArea {
-  margin-top: 2em;
-  min-height: 200px;
+  margin-top: 1.5em;
+  min-height: 300px;
   border: 1px dashed #555;
   padding: 1em;
   position: relative;
+  background-color: #1a1a1a;
 }
 
 .component {
   padding: 0.5em 1em;
-  background: #222;
+  background: #333;
   border: 1px solid #0bd4a2;
   border-radius: 4px;
   position: absolute;
@@ -55,4 +77,20 @@ button:hover {
 .readouts {
   margin-top: 2em;
   font-size: 1.1em;
+}
+
+#harmonyTree {
+  margin-bottom: 2em;
+}
+
+#treeVisual {
+  font-size: 2em;
+  margin-top: 10px;
+}
+
+#companion {
+  font-size: 0.9em;
+  background: #1d1d1d;
+  padding: 10px;
+  border-radius: 6px;
 }
