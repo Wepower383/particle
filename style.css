@@ -1,48 +1,58 @@
 body {
-  background-color: #111;
-  color: #f0f0f0;
-  font-family: monospace;
+  font-family: 'Courier New', monospace;
+  background: #111;
+  color: #fff;
   text-align: center;
-  padding: 40px 20px;
+  padding: 2em;
 }
 
-#simulator {
-  margin-top: 30px;
-}
-
-.controls button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #00ffc8;
+button {
+  margin: 0.5em;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  background-color: #1fe4b6;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.controls button:hover {
-  background-color: #00d1a6;
+button:hover {
+  background-color: #0bd4a2;
 }
 
-#workspace {
-  margin-top: 30px;
-  min-height: 100px;
-  border: 1px dashed #444;
-  padding: 20px;
-  background-color: #222;
-  border-radius: 8px;
+#circuitArea {
+  margin-top: 2em;
+  min-height: 200px;
+  border: 1px dashed #555;
+  padding: 1em;
+  position: relative;
 }
 
 .component {
-  margin: 5px;
-  padding: 8px 12px;
-  background-color: #333;
-  display: inline-block;
+  padding: 0.5em 1em;
+  background: #222;
+  border: 1px solid #0bd4a2;
   border-radius: 4px;
-  border: 1px solid #555;
+  position: absolute;
+  cursor: move;
+  user-select: none;
 }
 
-.output {
-  margin-top: 30px;
-  font-size: 18px;
+.component:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -25px;
+  left: 0;
+  background: #444;
+  color: #fff;
+  padding: 0.3em 0.6em;
+  border-radius: 4px;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.readouts {
+  margin-top: 2em;
+  font-size: 1.1em;
 }
