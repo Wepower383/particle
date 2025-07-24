@@ -13,20 +13,33 @@
   </div>
 
   <div id="simulator" style="display:none;">
-    <h2>Particle Simulator Panel</h2>
-    <div class="controls">
-      <button onclick="addComponent('battery')">Add Battery</button>
-      <button onclick="addComponent('resistor')">Add Resistor</button>
-      <button onclick="addComponent('coil')">Add Coil</button>
-      <button onclick="resetSimulator()">Reset</button>
+    <div id="leftPanel">
+      <h2>Particle Simulator Panel</h2>
+      <div class="controls">
+        <button onclick="addComponent('battery')">Add Battery</button>
+        <button onclick="addComponent('resistor')">Add Resistor</button>
+        <button onclick="addComponent('coil')">Add Coil</button>
+        <button onclick="resetSimulator()">Reset</button>
+      </div>
+
+      <div id="circuitArea"></div>
+
+      <div class="readouts">
+        <p><strong>Voltage:</strong> <span id="voltage">5</span> V</p>
+        <p><strong>Resistance:</strong> <span id="resistance">0</span> Ω</p>
+        <p><strong>Current:</strong> <span id="current">0</span> A</p>
+      </div>
     </div>
 
-    <div id="circuitArea"></div>
-
-    <div class="readouts">
-      <p><strong>Voltage:</strong> <span id="voltage">5</span> V</p>
-      <p><strong>Resistance:</strong> <span id="resistance">0</span> Ω</p>
-      <p><strong>Current:</strong> <span id="current">0</span> A</p>
+    <div id="rightPanel">
+      <div id="harmonyTree">
+        <h3>Harmony Tree</h3>
+        <div id="treeVisual">🌱</div>
+      </div>
+      <div id="companion">
+        <h3>Companion AI</h3>
+        <p id="companionMessage">Build something and I’ll guide you.</p>
+      </div>
     </div>
   </div>
 
