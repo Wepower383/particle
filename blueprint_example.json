@@ -1,0 +1,19 @@
+
+{
+  "components": [
+    {
+      "type": "Resistor",
+      "value": 1000,
+      "from": "A",
+      "to": "B",
+      "position": [50, 100]
+    },
+    {
+      "type": "VoltageSource",
+      "value": 12,
+      "from": "B",
+      "to": "C",
+      "position": [100, 100]
+    }
+  ]
+}
