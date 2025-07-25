@@ -1,83 +1,81 @@
+// Define global arrays
 let components = [];
+
+// Main canvas and context
+const canvas = document.getElementById("simulatorCanvas");
+const ctx = canvas.getContext("2d");
+
+// Voltage, Resistance, Current tracking
 let voltage = 0;
 let resistance = 0;
 let current = 0;
 
+// Function to add a component
 function addComponent(type) {
-  let value = 0;
-  if (type === "battery") value = prompt("Enter voltage (V):", 10);
-  if (type === "resistor") value = prompt("Enter resistance (Ω):", 10);
-  if (type === "coil") value = prompt("Enter turns of coil:", 20);
-  if (type === "capacitor") value = prompt("Enter capacitance (uF):", 100);
-  if (type === "diode") value = 0.7; // fixed forward drop for now
-  if (!value && value !== 0) return;
+  const x = 100 + components.length * 80;
+  const y = 250;
 
-  components.push({ type, value: parseFloat(value) });
-  updateSimulator();
+  const comp = {
+    type,
+    x,
+    y,
+    value: 1 + Math.floor(Math.random() * 9) // Random value 1–10
+  };
+
+  components.push(comp);
+  updateValues();
+  drawComponents();
 }
 
-function updateSimulator() {
-  const ctx = document.getElementById("simulatorCanvas").getContext("2d");
-  ctx.clearRect(0, 0, 800, 100);
+// Draw components
+function drawComponents() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  components.forEach((comp, index) => {
+    ctx.beginPath();
+    ctx.fillStyle = getColorForType(comp.type);
+    ctx.fillRect(comp.x, comp.y, 60, 30);
+    ctx.fillStyle = "white";
+    ctx.font = "14px sans-serif";
+    ctx.fillText(`${comp.type} (${comp.value})`, comp.x + 5, comp.y + 20);
+    ctx.closePath();
+  });
+}
+
+// Get color per component type
+function getColorForType(type) {
+  switch (type) {
+    case "battery": return "#FF0000";
+    case "resistor": return "#FFA500";
+    case "coil": return "#00BFFF";
+    case "capacitor": return "#008000";
+    case "diode": return "#800080";
+    default: return "#999999";
+  }
+}
+
+// Update Voltage/Resistance/Current
+function updateValues() {
+  voltage = components.filter(c => c.type === "battery").reduce((sum, c) => sum + c.value, 0);
+  resistance = components.filter(c => c.type === "resistor").reduce((sum, c) => sum + c.value, 0);
+
+  // Ohm’s Law: I = V / R (prevent divide-by-zero)
+  current = resistance > 0 ? (voltage / resistance).toFixed(2) : 0;
+
+  document.getElementById("voltage").textContent = voltage;
+  document.getElementById("resistance").textContent = resistance;
+  document.getElementById("current").textContent = current;
+}
+
+// Reset simulator
+function resetSimulator() {
+  components = [];
   voltage = 0;
   resistance = 0;
   current = 0;
-
-  components.forEach((comp, i) => {
-    ctx.fillStyle = comp.type === "battery" ? "lime" :
-                    comp.type === "resistor" ? "red" :
-                    comp.type === "coil" ? "orange" :
-                    comp.type === "capacitor" ? "cyan" :
-                    comp.type === "diode" ? "purple" : "white";
-    ctx.fillRect(i * 80 + 10, 30, 60, 40);
-
-    if (comp.type === "battery") voltage += comp.value;
-    if (comp.type === "resistor") resistance += comp.value;
-    if (comp.type === "diode") voltage -= comp.value; // forward drop
-  });
-
-  current = resistance > 0 ? voltage / resistance : 0;
-  document.getElementById("voltageDisplay").innerText = `Voltage: ${voltage} V`;
-  document.getElementById("resistanceDisplay").innerText = `Resistance: ${resistance} Ω`;
-  document.getElementById("currentDisplay").innerText = `Current: ${current.toFixed(2)} A`;
-
-  drawOscilloscope(current);
+  updateValues();
+  drawComponents();
 }
 
-function drawOscilloscope(current) {
-  const ctx = document.getElementById("oscilloscopeCanvas").getContext("2d");
-  ctx.clearRect(0, 0, 800, 100);
-
-  ctx.beginPath();
-  ctx.moveTo(0, 50);
-  for (let x = 0; x < 800; x++) {
-    let y = 50 + Math.sin((x + Date.now() / 10) / 20) * 20 * current;
-    ctx.lineTo(x, y);
-  }
-  ctx.strokeStyle = "#0f0";
-  ctx.stroke();
-}
-
-function resetSimulator() {
-  components = [];
-  updateSimulator();
-}
-
-setInterval(() => {
-  drawOscilloscope(current);
-}, 100);
-
-// Wait for DOM
-document.addEventListener("DOMContentLoaded", () => {
-  const controlsDiv = document.getElementById("controls");
-  controlsDiv.innerHTML = `
-    <button onclick="addComponent('battery')">Add Battery</button>
-    <button onclick="addComponent('resistor')">Add Resistor</button>
-    <button onclick="addComponent('coil')">Add Coil</button>
-    <button onclick="addComponent('capacitor')">Add Capacitor</button>
-    <button onclick="addComponent('diode')">Add Diode</button>
-    <button onclick="resetSimulator()">Reset</button>
-  `;
-  updateSimulator();
-});
+// Initialize
+resetSimulator();
