@@ -1,1 +1,0 @@
-// JS with power source, ground, and power flow logic
