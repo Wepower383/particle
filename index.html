@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Particle Simulator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; }
+        #toolbar { margin-top: 20px; }
+        .button { padding: 10px 20px; margin: 5px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        .button:hover { background-color: #0056b3; }
+        #canvasContainer { margin-top: 20px; display: flex; justify-content: center; }
+        canvas { border: 1px solid #000; }
+    </style>
+</head>
+<body>
+    <h1>Particle Simulator</h1>
+    <p>Simulation initialized. Components ready to be added.</p>
+    <div id="toolbar">
+        <button class="button" onclick="addComponent('Battery')">Battery</button>
+        <button class="button" onclick="addComponent('Resistor')">Resistor</button>
+        <button class="button" onclick="addComponent('Ground')">Ground</button>
+    </div>
+    <div id="canvasContainer">
+        <canvas id="simCanvas" width="600" height="400"></canvas>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
