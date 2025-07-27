@@ -2,29 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Particle Simulator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>⚡ Particle Simulator Panel ⚡</h1>
-
-  <div id="controls">
-    <button onclick="addComponent('battery')">Add Battery</button>
-    <button onclick="addComponent('resistor')">Add Resistor</button>
-    <button onclick="addComponent('coil')">Add Coil</button>
-    <button onclick="addComponent('capacitor')">Add Capacitor</button>
-    <button onclick="addComponent('diode')">Add Diode</button>
-    <button onclick="resetSimulator()">Reset</button>
+  <div id="intro">
+    <h1>Welcome to the simulator where the unseen can be seen</h1>
+    <button onclick="enterSimulation()">Enter</button>
   </div>
-
-  <canvas id="simulatorCanvas" width="900" height="500"></canvas>
-
-  <div id="infoPanel">
-    <p><strong>Voltage:</strong> <span id="voltage">0</span> V</p>
-    <p><strong>Resistance:</strong> <span id="resistance">0</span> Ω</p>
-    <p><strong>Current:</strong> <span id="current">0</span> A</p>
+  <div id="simulator" style="display:none;">
+    <!-- Simulation Interface Will Render Here -->
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>
