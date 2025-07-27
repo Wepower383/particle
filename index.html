@@ -1,1 +1,33 @@
-<!-- HTML with power, ground, and new components -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Particle Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>Simulator Up</h1>
+    <p>Initialize. Components ready to be added.</p>
+    <button onclick="initializeSimulator()">Enter</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="app.js" defer></script>
+  <script src="companionAI.js" defer></script>
+
+  <!-- Error Catcher -->
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      alert("⚠️ Error: " + message + " (line " + lineno + ")");
+      console.error("JavaScript Error:", message, "in", source, "at", lineno + ":" + colno);
+    };
+
+    function initializeSimulator() {
+      const app = document.getElementById("app");
+      app.innerHTML = "<p>Simulation initialized. Components ready to be added.</p>";
+    }
+  </script>
+</body>
+</html>
