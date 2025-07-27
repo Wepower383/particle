@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Particle Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Particle Simulator</h1>
+  <p>Simulation initialized. Components ready to be added.</p>
+  <button id="startBtn">Click to begin wiring your simulation.</button>
+  <div id="simulator">
+    <div class="component-button" data-type="battery">Battery</div>
+    <div class="component-button" data-type="resistor">Resistor</div>
+    <div class="component-button" data-type="ground">Ground</div>
+  </div>
+  <canvas id="wiringCanvas"></canvas>
+  <script src="app.js"></script>
+</body>
+</html>
