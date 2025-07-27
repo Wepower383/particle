@@ -1,1 +1,4 @@
-// Ohm's Law, Kirchhoff's Rules, and other math utilities
+// Support Ohm's Law and other equations
+function ohmsLaw(voltage, resistance) {
+  return voltage / resistance;
+}

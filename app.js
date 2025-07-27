@@ -1,6 +1,3 @@
-function enterSimulation() {
-  document.getElementById('intro').style.display = 'none';
-  document.getElementById('simulator').style.display = 'block';
-  // Initialize simulator components here
-  console.log("Simulation started.");
-}
+document.getElementById("enterBtn").addEventListener("click", () => {
+  alert("Simulator initialized. Components ready to be added.");
+});
