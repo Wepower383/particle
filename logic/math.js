@@ -1,1 +1,0 @@
-// Extended physics and logic equations
