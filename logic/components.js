@@ -1,1 +1,1 @@
-// Component logic will be added here.
+// New components: LED, Inductor, Switch, Logic Gates

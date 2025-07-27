@@ -1,1 +1,1 @@
-// Math utilities.
+// Extended physics and logic equations

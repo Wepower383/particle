@@ -1,1 +1,1 @@
-// Engine logic placeholder.
+// Power flow, wiring behavior, and signal logic
