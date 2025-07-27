@@ -1,1 +1,0 @@
-// Power flow, wiring behavior, and signal logic
