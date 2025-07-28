@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Particle Simulator - Layer 23</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toolbar">
+    <button onclick="addComponent('battery')">Battery</button>
+    <button onclick="addComponent('series')">Series Resistor</button>
+    <button onclick="addComponent('parallel')">Parallel Resistor</button>
+    <button onclick="addComponent('capacitor')">Capacitor</button>
+    <button onclick="addComponent('coil')">Coil</button>
+    <button onclick="addComponent('diode')">Diode</button>
+    <button onclick="addComponent('transistor')">Transistor</button>
+    <button onclick="addComponent('switch')">Switch</button>
+    <button onclick="addComponent('ground')">Ground</button>
+    <button onclick="addComponent('led')">LED</button>
+    <button onclick="clearBoard()">Reset Board</button>
+    <button onclick="saveJSON()">Save JSON</button>
+    <button onclick="loadJSON()">Load JSON</button>
+  </div>
+  <canvas id="circuitCanvas"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
