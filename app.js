@@ -1,0 +1,207 @@
+let layerIndex = 0;
+let layers = [];
+let voltage = 0;
+let wires = [];
+let currentPin = null;
+let canvas = null;
+let ctx = null;
+
+function addLayer() {
+  layerIndex++;
+  const layerId = 'layer-' + layerIndex;
+
+  const workspace = document.createElement('div');
+  workspace.classList.add('workspace');
+  workspace.id = layerId;
+  document.getElementById('workspaceContainer').appendChild(workspace);
+  layers.push({ id: layerId, components: [] });
+
+  const option = document.createElement('option');
+  option.value = layerId;
+  option.text = 'Layer ' + layerIndex;
+  document.getElementById('layerSelector').appendChild(option);
+
+  switchLayer(layerId);
+}
+
+function switchLayer(layerId) {
+  document.querySelectorAll('.workspace').forEach(ws => ws.classList.remove('active'));
+  const target = document.getElementById(layerId);
+  if (target) target.classList.add('active');
+  drawWires();
+}
+
+function addComponent(type, mode = null) {
+  const activeLayerId = document.getElementById('layerSelector').value;
+  const layer = layers.find(l => l.id === activeLayerId);
+  const workspace = document.getElementById(activeLayerId);
+
+  const comp = document.createElement('div');
+  comp.classList.add('component');
+  comp.style.left = '100px';
+  comp.style.top = '100px';
+
+  const leftPin = document.createElement('div');
+  leftPin.classList.add('pin', 'left');
+  leftPin.onclick = (e) => selectPin(e, leftPin);
+
+  const rightPin = document.createElement('div');
+  rightPin.classList.add('pin', 'right');
+  rightPin.onclick = (e) => selectPin(e, rightPin);
+
+  comp.appendChild(leftPin);
+  comp.appendChild(rightPin);
+
+  if (type === 'battery') {
+    comp.innerHTML += 'Battery<br>V: <input type="number" value="5" onchange="updateVoltage(this.value)">';
+    comp.setAttribute("data-type", "battery");
+  } else if (type === 'resistor') {
+    const resistorId = Date.now(); // unique ID
+    const label = mode === 'parallel' ? 'Parallel Resistor' : 'Series Resistor';
+    comp.setAttribute("data-id", resistorId);
+    comp.setAttribute("data-mode", mode);
+    comp.setAttribute("data-type", "resistor");
+    comp.innerHTML += `${label}<br>Ω: <input type="number" value="10" onchange="updateResistance(this.value, ${resistorId}, '${activeLayerId}')">`;
+    layer.components.push({ id: resistorId, resistance: 10, mode: mode });
+  }
+
+  makeDraggable(comp);
+  workspace.appendChild(comp);
+  calculateCurrent();
+}
+
+function selectPin(e, pin) {
+  e.stopPropagation();
+  if (!currentPin) {
+    currentPin = pin;
+  } else {
+    wires.push([currentPin, pin]);
+    currentPin = null;
+    drawWires();
+    validatePaths();
+  }
+}
+
+function drawWires() {
+  if (!canvas) {
+    canvas = document.getElementById("wireCanvas");
+    ctx = canvas.getContext("2d");
+  }
+  canvas.width = window.innerWidth;
+  canvas.height = document.getElementById("workspaceContainer").offsetHeight;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 2;
+
+  wires.forEach(([p1, p2]) => {
+    const rect1 = p1.getBoundingClientRect();
+    const rect2 = p2.getBoundingClientRect();
+    const x1 = rect1.left + 6;
+    const y1 = rect1.top + 6 - canvas.getBoundingClientRect().top;
+    const x2 = rect2.left + 6;
+    const y2 = rect2.top + 6 - canvas.getBoundingClientRect().top;
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  });
+}
+
+function validatePaths() {
+  let connected = false;
+  for (let [p1, p2] of wires) {
+    if (
+      p1.parentElement.getAttribute("data-type") === "battery" ||
+      p2.parentElement.getAttribute("data-type") === "battery"
+    ) {
+      connected = true;
+      break;
+    }
+  }
+
+  const output = document.getElementById("output");
+  if (!connected) {
+    output.innerText = "⚠️ No valid circuit path from battery to components.";
+  } else {
+    output.innerText += "
+✅ Battery is connected to circuit.";
+  }
+}
+
+function updateVoltage(val) {
+  voltage = parseFloat(val);
+  calculateCurrent();
+}
+
+function updateResistance(val, id, layerId) {
+  const layer = layers.find(l => l.id === layerId);
+  const resistor = layer.components.find(r => r.id === id);
+  if (resistor) {
+    resistor.resistance = parseFloat(val);
+  }
+  calculateCurrent();
+}
+
+function calculateCurrent() {
+  let series = [], parallel = [];
+
+  layers.forEach(layer => {
+    layer.components.forEach(r => {
+      if (r.mode === 'series') series.push(r);
+      if (r.mode === 'parallel') parallel.push(r);
+    });
+  });
+
+  const seriesTotal = series.reduce((sum, r) => sum + r.resistance, 0);
+  const parallelTotal = 1 / parallel.reduce((sum, r) => sum + (1 / r.resistance), 0);
+
+  let totalResistance;
+  if (parallel.length > 0 && series.length > 0) {
+    totalResistance = seriesTotal + parallelTotal;
+  } else if (parallel.length > 0) {
+    totalResistance = parallelTotal;
+  } else {
+    totalResistance = seriesTotal;
+  }
+
+  const output = document.getElementById('output');
+  if (voltage > 0 && totalResistance > 0) {
+    let current = voltage / totalResistance;
+    output.innerText =
+      `Series R: ${seriesTotal.toFixed(2)} Ω
+Parallel R: ${parallel.length > 0 ? parallelTotal.toFixed(2) : 'N/A'} Ω
+Total R: ${totalResistance.toFixed(2)} Ω
+Current: ${current.toFixed(2)} A`;
+  } else {
+    output.innerText = `Add a battery and resistors to calculate current.`;
+  }
+
+  validatePaths();
+}
+
+// Initial layer
+window.onload = () => {
+  addLayer();
+  canvas = document.getElementById("wireCanvas");
+  ctx = canvas.getContext("2d");
+  window.addEventListener("resize", drawWires);
+};
+
+function makeDraggable(el) {
+  let offsetX, offsetY;
+  el.onmousedown = function(e) {
+    offsetX = e.clientX - el.offsetLeft;
+    offsetY = e.clientY - el.offsetTop;
+    document.onmousemove = function(e) {
+      el.style.left = (e.clientX - offsetX) + 'px';
+      el.style.top = (e.clientY - offsetY) + 'px';
+      drawWires();
+    };
+    document.onmouseup = function() {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  };
+}
