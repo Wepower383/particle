@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Particle Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="menu">
+    <button onclick="addComponent('Battery')">Battery</button>
+    <button onclick="addComponent('Series Resistor')">Series Resistor</button>
+    <button onclick="addComponent('Parallel Resistor')">Parallel Resistor</button>
+    <button onclick="addComponent('Capacitor')">Capacitor</button>
+    <button onclick="addComponent('Coil')">Coil</button>
+    <button onclick="addComponent('Diode')">Diode</button>
+    <button onclick="addComponent('Transistor')">Transistor</button>
+    <button onclick="addComponent('Switch')">Switch</button>
+    <button onclick="addComponent('Ground')">Ground</button>
+    <button onclick="addComponent('LED')">LED</button>
+    <button onclick="clearWires()">Clear Wires</button>
+  </div>
+  <canvas id="simCanvas" width="1200" height="600"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
