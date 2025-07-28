@@ -1,0 +1,37 @@
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f4f4f4;
+}
+#toolbar {
+  padding: 10px;
+  background: black;
+  display: flex;
+  flex-wrap: wrap;
+}
+#toolbar button {
+  margin: 2px;
+  padding: 8px;
+  background: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.component {
+  position: absolute;
+  padding: 5px;
+  background: #333;
+  color: white;
+  border: 1px solid #000;
+  cursor: move;
+}
+.component input {
+  width: 40px;
+}
+canvas {
+  border: 1px solid #ccc;
+  display: block;
+  width: 100%;
+  height: calc(100vh - 50px);
+}
