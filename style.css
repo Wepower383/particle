@@ -1,0 +1,44 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+}
+.header {
+  background: #111;
+  color: white;
+  padding: 10px;
+  font-size: 24px;
+  text-align: center;
+}
+.controls {
+  padding: 10px;
+  text-align: center;
+}
+button {
+  margin: 5px;
+  padding: 10px 20px;
+}
+#canvas {
+  position: relative;
+  height: 500px;
+  border: 1px solid #ccc;
+  background: white;
+}
+.component {
+  position: absolute;
+  width: 120px;
+  padding: 10px;
+  border: 1px solid black;
+  background: black;
+  color: white;
+  text-align: center;
+  cursor: move;
+}
+input {
+  width: 50px;
+  margin-top: 5px;
+}
+.footer {
+  padding: 10px;
+  font-size: 16px;
+}
