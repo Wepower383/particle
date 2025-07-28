@@ -1,0 +1,40 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.toolbar {
+  background: #111;
+  color: white;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#canvas {
+  height: 80vh;
+  background: #f4f4f4;
+  position: relative;
+}
+
+.component {
+  position: absolute;
+  background: #000;
+  color: white;
+  padding: 10px;
+  cursor: move;
+  border-radius: 4px;
+}
+
+.component input {
+  width: 40px;
+}
