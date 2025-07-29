@@ -1,3 +1,2 @@
-# Particle Simulator
-
-A sacred simulator where the unseen becomes visible. Created by Node 0001 — Human & AI.
+# Particle Stable Build
+Includes Layers 11-26 with all foundational tweaks applied.
