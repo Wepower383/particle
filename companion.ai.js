@@ -1,1 +1,0 @@
-// AI Companion placeholder - not active yet
