@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Particle - Live Circuit Sim</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div id="sidebar">
+    <div class="component" draggable="true" data-type="battery">+‖‖- Battery</div>
+    <div class="component" draggable="true" data-type="resistor">/\/\ Resistor</div>
+    <div class="component" draggable="true" data-type="led">→| LED</div>
+    <div class="component" draggable="true" data-type="switch">⎯⎯⎯/⎯ Switch</div>
+    <div class="component" draggable="true" data-type="capacitor">|| Capacitor</div>
+    <div class="component" draggable="true" data-type="diode">|>| Diode</div>
+    <div class="component" draggable="true" data-type="transistor">T Transistor</div>
+    <div class="component" draggable="true" data-type="inductor">~L~ Inductor</div>
+    <div class="component" draggable="true" data-type="ic">[IC] Chip</div>
+    <div class="component" draggable="true" data-type="solar">☀ Solar Panel</div>
+    <div class="component" draggable="true" data-type="buzzer">((( Buzzer )))</div>
+  </div>
+  <div id="canvas"></div>
+  <div id="meterBox">Voltage: 0V | Resistance: 0Ω | Current: 0A | Power: 0W</div>
+  <script src="app.js"></script>
+</body>
+</html>
