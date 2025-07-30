@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  font-family: monospace;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+#sidebar {
+  width: 200px;
+  background: #1e1e1e;
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.component {
+  background: #333;
+  border: 1px solid #555;
+  margin: 6px 0;
+  padding: 8px;
+  text-align: center;
+  cursor: grab;
+}
+#canvas {
+  flex: 1;
+  background: #f0f0f0;
+  position: relative;
+}
+.component-instance {
+  position: absolute;
+  background: white;
+  border: 1px solid #aaa;
+  padding: 6px 10px;
+  cursor: move;
+  user-select: none;
+}
+.wire {
+  position: absolute;
+  height: 2px;
+  background: gray;
+  transform-origin: left center;
+}
+.wire:hover {
+  background: red;
+}
+#meterBox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  padding: 8px 12px;
+  border: 1px solid #aaa;
+  font-size: 13px;
+  font-family: monospace;
+}
+.led-on {
+  background-color: #00ff00;
+}
