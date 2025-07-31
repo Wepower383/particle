@@ -1,0 +1,52 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #001100;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+#component-panel {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+}
+button {
+  background-color: #00ff00;
+  color: black;
+  border: none;
+  padding: 10px;
+  margin: 2px;
+  cursor: pointer;
+}
+#calculator-panel {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #003300;
+  padding: 10px;
+  border-radius: 8px;
+  color: #00ff00;
+}
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.component {
+  position: absolute;
+  padding: 8px;
+  background-color: #00ff00;
+  border-radius: 5px;
+  cursor: move;
+  color: black;
+  z-index: 2;
+}
+input {
+  display: block;
+  margin-top: 4px;
+  width: 80px;
+}
