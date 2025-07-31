@@ -1,0 +1,39 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+#component-panel {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+}
+button {
+  background-color: green;
+  color: black;
+  border: none;
+  padding: 10px;
+  margin: 2px;
+  cursor: pointer;
+}
+#canvas {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.component {
+  position: absolute;
+  padding: 8px;
+  background-color: green;
+  border-radius: 5px;
+  cursor: move;
+  color: black;
+}
+input {
+  display: block;
+  margin-top: 4px;
+}
