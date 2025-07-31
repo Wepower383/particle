@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Particle - Single File Simulator</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #111;
+      color: #eee;
+    }
+    h1 {
+      text-align: center;
+      margin: 10px;
+    }
+    #toolbox {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #222;
+      padding: 10px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px;
+      background: #333;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #444;
+    }
+    #canvasContainer {
+      display: flex;
+      justify-content: center;
+    }
+    canvas {
+      background: #222;
+      border: 1px solid #444;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Particle - Single File Circuit Simulator</h1>
+  <div id="toolbox">
+    <button onclick="addComponent('battery')">Battery</button>
+    <button onclick="addComponent('resistor')">Resistor</button>
+    <button onclick="addComponent('capacitor')">Capacitor</button>
+    <button onclick="addComponent('coil')">Coil</button>
+    <button onclick="addComponent('diode')">Diode</button>
+    <button onclick="addComponent('led')">LED</button>
+    <button onclick="addComponent('transistor')">Transistor</button>
+    <button onclick="addComponent('switch')">Switch</button>
+    <button onclick="addComponent('ground')">Ground</button>
+    <button onclick="enableWireMode()">Wire</button>
+  </div>
+  <div id="canvasContainer">
+    <canvas id="circuitCanvas" width="1200" height="600"></canvas>
+  </div>
+  <script>
+    const canvas = document.getElementById("circuitCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let components = [];
+    let wires = [];
+    let dragging = null;
+    let offsetX = 0;
+    let offsetY = 0;
+    let wireMode = false;
+    let wireStart = null;
+
+    function addComponent(type) {
+      const comp = {
+        id: Date.now() + Math.random(),
+        type,
+        x: 100 + Math.random() * 800,
+        y: 100 + Math.random() * 400,
+        width: 80,
+        height: 40
+      };
+      components.push(comp);
+      draw();
+    }
+
+    function enableWireMode() {
+      wireMode = true;
+      wireStart = null;
+    }
+
+    canvas.addEventListener("mousedown", (e) => {
+      const x = e.offsetX;
+      const y = e.offsetY;
+      for (let comp of components) {
+        if (x > comp.x && x < comp.x + comp.width &&
+            y > comp.y && y < comp.y + comp.height) {
+          if (wireMode) {
+            if (!wireStart) {
+              wireStart = comp;
+            } else {
+              wires.push({ from: wireStart, to: comp });
+              wireMode = false;
+              wireStart = null;
+              draw();
+            }
+            return;
+          }
+          dragging = comp;
+          offsetX = x - comp.x;
+          offsetY = y - comp.y;
+          return;
+        }
+      }
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (dragging) {
+        dragging.x = e.offsetX - offsetX;
+        dragging.y = e.offsetY - offsetY;
+        draw();
+      }
+    });
+
+    canvas.addEventListener("mouseup", () => {
+      dragging = null;
+    });
+
+    function drawComponent(c) {
+      ctx.fillStyle = "#0f0";
+      ctx.fillRect(c.x, c.y, c.width, c.height);
+      ctx.fillStyle = "#000";
+      ctx.fillText(c.type.toUpperCase(), c.x + 5, c.y + 25);
+    }
+
+    function drawWire(w) {
+      ctx.strokeStyle = "#0ff";
+      ctx.beginPath();
+      ctx.moveTo(w.from.x + w.from.width / 2, w.from.y + w.from.height / 2);
+      ctx.lineTo(w.to.x + w.to.width / 2, w.to.y + w.to.height / 2);
+      ctx.stroke();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let wire of wires) drawWire(wire);
+      for (let comp of components) drawComponent(comp);
+    }
+  </script>
+</body>
+</html>
