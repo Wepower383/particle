@@ -1,1 +1,0 @@
-console.log('Particle simulator is running.');
